@@ -12,14 +12,13 @@ module.exports = {
     res.status(200).send(messages);
   },
   update: (req, res) => {
-    let index = null;
-    messages.forEach((message, i) =>{
-      if (message.id == req.params.id) index = i;
-    });
+    const index = messages.findIndex(messages => messages.id === req.params.id);
+    let message = messages[index];
+
     messages[index] = {
-      id: messages[index].id,
-      text: messages[index].text || req.body.text,
-      time: messages[index].time 
+      id: message.id,
+      text: req.body.text || message.text ,
+      time: message.time 
     };
     res.status(200).send(messages)
   },
